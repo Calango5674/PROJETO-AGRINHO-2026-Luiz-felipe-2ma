@@ -3,133 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto Agrinho 2026 - Pensamento Computacional</title>
+    <title>Acessibilidade na Escola: Inclusão para Todos</title>
     <style>
-        /* Estilização básica para o projeto não ficar sem formatação */
+        /* Cores com alto contraste para facilitar a leitura */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             line-height: 1.6;
+            background-color: #ffffff;
+            color: #1a1a1a;
             margin: 0;
             padding: 0;
-            background-color: #f4f9f4;
-            color: #333;
         }
+
+        /* Atalho de acessibilidade para quem usa teclado (Tab) */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #0056b3;
+            color: white;
+            padding: 8px;
+            z-index: 100;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
         header {
-            background-color: #2e7d32;
+            background-color: #004085;
             color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-        }
-        nav {
-            background-color: #1b5e20;
-            padding: 0.5rem;
+            padding: 20px;
             text-align: center;
         }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            background-color: #f8f9fa;
+            margin: 0;
+            border-bottom: 2px solid #dee2e6;
+        }
+
         nav a {
-            color: white;
+            color: #0056b3;
             text-decoration: none;
-            margin: 0 15px;
             font-weight: bold;
+            padding: 15px;
+            display: inline-block;
         }
-        nav a:hover {
-            text-decoration: underline;
+
+        nav a:focus, nav a:hover {
+            background-color: #0056b3;
+            color: white;
+            outline: 3px solid #ffc107;
         }
+
         main {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+
         section {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 20px;
         }
+
         h2 {
-            color: #2e7d32;
-            border-bottom: 2px solid #a4c2a5;
-            padding-bottom: 5px;
+            color: #004085;
         }
-        .cards {
-            display: flex;
-            gap: 15px;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-        .card {
-            flex: 1;
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 6px;
-            border-left: 5px solid #2e7d32;
-        }
-        footer {
+
+        /* Recursos de Acessibilidade (Botões de ajuste) */
+        .accessibility-tools {
             text-align: center;
-            padding: 20px;
-            background-color: #2e7d32;
+            padding: 10px;
+            background-color: #e2e3e5;
+        }
+
+        .btn-accessible {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #fff;
+            border: 2px solid #004085;
+            color: #004085;
+            font-weight: bold;
+        }
+
+        .btn-accessible:focus, .btn-accessible:hover {
+            background-color: #004085;
             color: white;
+        }
+
+        /* Classe para Modo de Alto Contraste via JavaScript */
+        .high-contrast {
+            background-color: #000000 !important;
+            color: #ffff00 !important;
+        }
+        .high-contrast h2, .high-contrast nav a {
+            color: #ffff00 !important;
+        }
+        .high-contrast header, .high-contrast .accessibility-tools {
+            background-color: #1a1a1a !important;
+            border-color: #ffff00 !important;
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 15px;
             margin-top: 40px;
         }
     </style>
 </head>
 <body>
 
+    <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
+
+    <div class="accessibility-tools" role="region" aria-label="Ferramentas de Acessibilidade">
+        <button class="btn-accessible" onclick="alterarFonte(1)" aria-label="Aumentar tamanho do texto">A+</button>
+        <button class="btn-accessible" onclick="alterarFonte(-1)" aria-label="Diminuir tamanho do texto">A-</button>
+        <button class="btn-accessible" onclick="alternarContraste()" aria-label="Alternar alto contraste">Alto Contraste</button>
+    </div>
+
     <header>
-        <h1>Agrinho 2026</h1>
-        <p>Inovação e Tecnologia no Campo: Uma Abordagem com Pensamento Computacional</p>
+        <h1>Acessibilidade no Ambiente Escolar</h1>
+        <p>Construindo uma escola acolhedora e inclusiva para todas as pessoas.</p>
     </header>
 
-    <nav>
-        <a href="#sobre">Sobre o Projeto</a>
-        <a href="#pilares">Pensamento Computacional</a>
-        <a href="#solucao">Nossa Solução</a>
+    <nav aria-label="Menu Principal">
+        <ul>
+            <li><a href="#arquitetonica">Física / Arquitetônica</a></li>
+            <li><a href="#comunicacional">Comunicacional</a></li>
+            <li><a href="#atitudinal">Atitudinal</a></li>
+            <li><a href="#pedagogica">Pedagógica</a></li>
+        </ul>
     </nav>
 
-    <main>
-        <section id="sobre">
-            <h2>Sobre o Projeto</h2>
-            <p>O Programa Agrinho 2026 traz como foco a integração entre o conhecimento do campo e as novas tecnologias. Neste espaço, apresentamos como a tecnologia e as práticas sustentáveis podem caminhar juntas para transformar o futuro da agricultura regional.</p>
+    <main id="conteudo-principal">
+        
+        <section id="arquitetonica">
+            <h2>1. Acessibilidade Arquitetônica (Física)</h2>
+            <p>Refere-se à eliminação de barreiras físicas nos prédios e espaços escolares para permitir a circulação de pessoas com deficiência motora, cadeirantes ou mobilidade reduzida.</p>
+            <ul>
+                <li>Rampas com inclinação correta e corrimãos duplos.</li>
+                <li>Piso tátil para orientação de pessoas cegas ou com baixa visão.</li>
+                <li>Banheiros adaptados e portas largas.</li>
+            </ul>
         </section>
 
-        <section id="pilares">
-            <h2>Os 4 Pilares no Agronegócio</h2>
-            <p>Para resolver os desafios do campo, aplicamos os quatro pilares do Pensamento Computacional:</p>
-            
-            <div class="cards">
-                <div class="card">
-                    <h3>Decomposição</h3>
-                    <p>Dividir a produção agrícola em partes menores (solo, clima, irrigação) para entender melhor cada etapa.</p>
-                </div>
-                <div class="card">
-                    <h3>Reconhecimento de Padrões</h3>
-                    <p>Identificar épocas de chuva e comportamento de pragas baseando-se em dados de anos anteriores.</p>
-                </div>
-            </div>
-
-            <div class="cards">
-                <div class="card">
-                    <h3>Abstração</h3>
-                    <p>Focar apenas nas informações cruciais para a colheita, deixando de lado detalhes irrelevantes no momento.</p>
-                </div>
-                <div class="card">
-                    <h3>Algoritmos</h3>
-                    <p>Criar um passo a passo automatizado para o sistema de irrigação ou para a rotação de culturas de forma eficiente.</p>
-                </div>
-            </div>
+        <section id="comunicacional">
+            <h2>2. Acessibilidade Comunicacional</h2>
+            <p>Garante que a comunicação escrita, falada ou digital chegue a todos os estudantes, eliminando barreiras na transmissão de mensagens.</p>
+            <ul>
+                <li>Disponibilidade de materiais em <strong>Braille</strong> ou audiolivros.</li>
+                <li>Presença de intérpretes de <strong>LIBRAS</strong> (Língua Brasileira de Sinais) nas aulas e eventos.</li>
+                <li>Sites e computadores da escola com leitores de tela configurados.</li>
+            </ul>
         </section>
 
-        <section id="solucao">
-            <h2>Nossa Solução Tecnológica</h2>
-            <p>Aqui você pode descrever a ideia do seu grupo (por exemplo: um protótipo de sensor de umidade com Arduino, um aplicativo de gerenciamento de colheitas ou um jogo educativo sobre sustentabilidade).</p>
-            <blockquote>
-                <strong>Meta do Projeto:</strong> Utilizar a lógica de programação para otimizar o uso de recursos hídricos e reduzir o desperdício de insumos na fazenda.
-            </blockquote>
+        <section id="atitudinal">
+            <h2>3. Acessibilidade Atitudinal</h2>
+            <p>Diz respeito às atitudes e comportamentos das pessoas dentro da escola. É o combate ao preconceito, ao capacitismo e à discriminação.</p>
+            <ul>
+                <li>Treinamento de professores e funcionários sobre inclusão.</li>
+                <li>Projetos de conscientização entre os alunos para evitar o bullying.</li>
+                <li>Acolhimento e respeito às diferentes formas de aprender.</li>
+            </ul>
         </section>
+
+        <section id="pedagogica">
+            <h2>4. Acessibilidade Pedagógica (Curricular)</h2>
+            <p>Adaptação das metodologias de ensino, avaliações e materiais didáticos para atender estudantes com deficiências intelectuais, neurodivergências (como autismo e TDAH) ou dificuldades de aprendizagem.</p>
+            <ul>
+                <li>Provas adaptadas (com mais tempo ou enunciados simplificados).</li>
+                <li>Uso de recursos visuais e táteis para fixação de conteúdos.</li>
+                <li>Plano de Desenvolvimento Individualizado (PDI) para o aluno.</li>
+            </ul>
+        </section>
+
     </main>
 
     <footer>
-        <p>&copy; 2026 - Desenvolvido para a matéria de Pensamento Computacional | Projeto Agrinho</p>
+        <p>&copy; 2026 - Criado com foco em Acessibilidade e Inclusão Escolar.</p>
     </footer>
 
+    <script>
+        let tamanhoFonte = 16;
+
+        function alterarFonte(direcao) {
+            tamanhoFonte += direcao * 2;
+            // Limita o tamanho para não quebrar o layout
+            if (tamanhoFonte < 12) tamanhoFonte = 12;
+            if (tamanhoFonte > 24) tamanhoFonte = 24;
+            document.body.style.fontSize = tamanhoFonte + 'px';
+        }
+
+        function alternarContraste() {
+            document.body.classList.toggle('high-contrast');
+        }
+    </script>
 </body>
 </html>

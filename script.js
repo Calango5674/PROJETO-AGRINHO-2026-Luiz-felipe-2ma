@@ -1,106 +1,77 @@
-/* ==========================================================================
-   PROJETO AGRINHO 2026 - MATÉRIA: PENSAMENTO COMPUTACIONAL
-   Script para interatividade e lógica de automação simulada
-   ========================================================================== */
+// ==========================================================================
+// CONFIGURAÇÕES DE ACESSIBILIDADE: TAMANHO DA FONTE E ALTO CONTRASTE
+// ==========================================================================
 
-// Aguarda o carregamento completo do DOM (documento HTML)
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("Script do Agrinho 2026 carregado com sucesso! 🌱");
-    
-    // Executa as funções principais
-    inicializarCardsInterativos();
-    criarSimuladorAgricola();
+// Variáveis para controle do tamanho da fonte
+let tamanhoFonteAtual = 16; 
+const TAMANHO_MINIMO = 12;
+const TAMANHO_MAXIMO = 26;
+
+// Executa assim que a página carrega para recuperar as preferências salvas
+window.addEventListener('DOMContentLoaded', () => {
+    verificarPreferenciaContraste();
+    verificarPreferenciaFonte();
 });
 
-/* ==========================================================================
-   FASE 1: INTERATIVIDADE DOS CARDS (Estímulo Visual)
-   ========================================================================== */
-function inicializarCardsInterativos() {
-    const cards = document.querySelectorAll(".card");
+/**
+ * Altera o tamanho da fonte de todo o corpo do site (body)
+ * @param {number} direcao - Use 1 para aumentar e -1 para diminuir
+ */
+function alterarFonte(direcao) {
+    // Altera o tamanho de 2 em 2 pixels
+    tamanhoFonteAtual += direcao * 2;
 
-    cards.forEach(card => {
-        // Altera o estilo ao passar o rato (além do CSS) para demonstrar eventos
-        card.addEventListener("click", () => {
-            const pilar = card.querySelector("h3").innerText;
-            
-            // Exemplo de Algoritmo: Condicional para mensagens personalizadas
-            let mensagem = "";
-            switch (pilar) {
-                case "Decomposição":
-                    mensagem = "🔍 Decompor no Agrinho significa olhar para a fazenda e separar o solo, a semente e o clima para estudar um por um.";
-                    break;
-                case "Reconhecimento de Padrões":
-                    mensagem = "📈 Padrões nos ajudam a prever quando vai chover ou quando as pragas costumam aparecer com base em anos anteriores.";
-                    break;
-                case "Abstração":
-                    mensagem = "💡 Abstrair é focar no que importa! Se precisamos regar a planta, focamos na humidade do solo e esquecemos a cor do trator.";
-                    break;
-                case "Algoritmos":
-                    mensagem = "🤖 Criar um algoritmo é programar o passo a passo: 'SE o solo estiver seco, ENTÃO ligue o sistema de irrigação'.";
-                    break;
-                default:
-                    mensagem = "Você clicou em um pilar do Pensamento Computacional!";
-            }
-            
-            alert(mensagem);
-        });
-    });
+    // Garante que a fonte não fique nem muito pequena nem excessivamente grande
+    if (tamanhoFonteAtual < TAMANHO_MINIMO) {
+        tamanhoFonteAtual = TAMANHO_MINIMO;
+    }
+    if (tamanhoFonteAtual > TAMANHO_MAXIMO) {
+        tamanhoFonteAtual = TAMANHO_MAXIMO;
+    }
+
+    // Aplica o novo tamanho no CSS do body
+    document.body.style.fontSize = tamanhoFonteAtual + 'px';
+
+    // Salva a preferência do usuário no navegador
+    localStorage.setItem('preferenciaFonte', tamanhoFonteAtual);
 }
 
-/* ==========================================================================
-   FASE 2: SIMULADOR DE PENSAMENTO COMPUTACIONAL (Lógica Aplicada)
-   Inserção dinâmica de uma ferramenta de simulação de irrigação no HTML
-   ========================================================================== */
-function criarSimuladorAgricola() {
-    const solucaoSection = document.getElementById("solucao");
+/**
+ * Alterna a classe de alto contraste no body e salva a escolha do usuário
+ */
+function alternarContraste() {
+    const corpoPagina = document.body;
     
-    if (!solucaoSection) return;
+    // Adiciona ou remove a classe 'high-contrast' definida no style.css
+    corpoPagina.classList.toggle('high-contrast');
 
-    // Criando a estrutura do simulador via JavaScript (Manipulação de DOM)
-    const containerSimulador = document.createElement("div");
-    containerSimulador.style.marginTop = "25px";
-    containerSimulador.style.padding = "20px";
-    containerSimulador.style.border = "2px dashed #2e7d32";
-    containerSimulador.style.borderRadius = "8px";
-    containerSimulador.style.backgroundColor = "#fafafa";
+    // Verifica se a classe está ativa para salvar o estado correto
+    if (corpoPagina.classList.contains('high-contrast')) {
+        localStorage.setItem('altoContraste', 'ativo');
+    } else {
+        localStorage.setItem('altoContraste', 'inativo');
+    }
+}
 
-    containerSimulador.innerHTML = `
-        <h3 style="color: #2e7d32; margin-bottom: 10px;">🤖 Simulador de Algoritmo Agrícola</h3>
-        <p style="font-size: 0.95rem;">Simule o funcionamento de um sensor de humidade do solo automatizado:</p>
-        
-        <label for="humidade" style="font-weight: bold;">Nível de Humidade do Solo: <span id="valorHumidade">50</span>%</label>
-        <input type="range" id="humidade" min="0" max="100" value="50" style="width: 100%; margin: 10px 0; accent-color: #2e7d32;">
-        
-        <div id="statusPainel" style="padding: 10px; border-radius: 4px; text-align: center; font-weight: bold; background-color: #ffe082; color: #b78103;">
-            ⚠️ Status: Sistema em Análise
-        </div>
-    `;
+/**
+ * Verifica se o usuário já havia ativado o alto contraste na última visita
+ */
+function verificarPreferenciaContraste() {
+    const contrasteSalvo = localStorage.getItem('altoContraste');
+    
+    if (contrasteSalvo === 'ativo') {
+        document.body.classList.add('high-contrast');
+    }
+}
 
-    // Adiciona o simulador dentro da secção "Nossa Solução"
-    solucaoSection.appendChild(containerSimulador);
-
-    // Lógica do Simulador (Algoritmo "Se... Então...")
-    const inputHumidade = document.getElementById("humidade");
-    const valorHumidade = document.getElementById("valorHumidade");
-    const statusPainel = document.getElementById("statusPainel");
-
-    inputHumidade.addEventListener("input", (evento) => {
-        const humidadeAtual = evento.target.value;
-        valorHumidade.innerText = humidadeAtual;
-
-        // Aplicação pura de Pensamento Computacional (Algoritmos / Tomada de Decisão)
-        if (humidadeAtual < 30) {
-            statusPainel.innerText = "🚨 ALERTA: Solo Seco! Irrigação LIGADA automaticamente.";
-            statusPainel.style.backgroundColor = "#ffcdd2";
-            statusPainel.style.color = "#b71c1c";
-        } else if (humidadeAtual >= 30 && humidadeAtual <= 70) {
-            statusPainel.innerText = "👍 IDEAL: Humidade estável. Sistema em modo de espera.";
-            statusPainel.style.backgroundColor = "#c8e6c9";
-            statusPainel.style.color = "#1b5e20";
-        } else {
-            statusPainel.innerText = "🌊 ATENÇÃO: Solo muito húmido! Risco de encharcar as raízes.";
-            statusPainel.style.backgroundColor = "#bbdefb";
-            statusPainel.style.color = "#0d47a1";
-        }
-    });
+/**
+ * Verifica se o usuário já havia alterado o tamanho da fonte na última visita
+ */
+function verificarPreferenciaFonte() {
+    const fonteSalva = localStorage.getItem('preferenciaFonte');
+    
+    if (fonteSalva) {
+        tamanhoFonteAtual = parseInt(fonteSalva, 10);
+        document.body.style.fontSize = tamanhoFonteAtual + 'px';
+    }
 }
